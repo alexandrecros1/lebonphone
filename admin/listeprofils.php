@@ -40,7 +40,7 @@ include '../helper/navbaradmin.php';
                         <li>Adresse : <?=$adminlisteprofil[$i]->adresse1;?></li>
                         <li>Ville : <?=$adminlisteprofil[$i]->nomville;?></li>
                         <?php if ($adminlisteprofil[$i]->iduser == "9999") {
-                            echo "test";
+                            echo "";
                         } else { ?>
                         <form action="../admin/admindeleteprofil.php" method="post">
                             <input type="text" name="iduser" value="<?=$adminlisteprofil[$i]->iduser;?>" hidden>
