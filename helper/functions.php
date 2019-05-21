@@ -763,10 +763,11 @@ function deletetelephone(){
 
     if(isset($_POST['idprod'])){
         $idprod = $_POST['idprod'];
-    $req = getDatabase()->prepare('DELETE FROM telephone WHERE idprod=:pid');
-    $req -> bindParam(":pid", $idprod);
+    $req = getDatabase()->prepare('CALL SupprimerTelephone(:pid)');
+    $req->bindParam(":pid", $idprod);
     $req->execute();
     header("Location: ../client/mesventes.php");
+    //DELETE FROM telephone WHERE idprod=:pid
     }
 }
 

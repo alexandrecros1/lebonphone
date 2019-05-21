@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le :  mar. 21 mai 2019 à 08:48
+-- Généré le :  mar. 21 mai 2019 à 09:51
 -- Version du serveur :  5.7.25
 -- Version de PHP :  7.3.1
 
@@ -13,6 +13,15 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `lebonphone`
 --
+
+DELIMITER $$
+--
+-- Procédures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SupprimerTelephone` (IN `idtel` INT)  NO SQL
+DELETE from telephone where idprod = idtel$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -31,6 +40,7 @@ CREATE TABLE `achete` (
 
 INSERT INTO `achete` (`idprod`, `iduser`) VALUES
 (13, 1),
+(68, 1),
 (70, 1),
 (23, 2);
 
@@ -180,7 +190,6 @@ INSERT INTO `telephone` (`idprod`, `libelle`, `prix`, `etat`, `description`, `ph
 (42, 'Z1 Compact', 90, 'Bon', 'Sony z1 compact débloqué, mieux qu\'un iPhone!\r\nSlot micro SD\r\nProcesseur quadri coeur 2,2ghz\r\n16go de stockage\r\nAppareil photo 20,7 mega pixels...\r\nBatterie neuve\r\nÉcran nickel toujours protégé par une vitre en verre trempé\r\nVendue avec 2 coques\r\nJuste quelques traces sur l\'arrière et les coins', NULL, '5,3', 'Oui', '32Go', 'Noir', 'Android', 0, 0, 1, 9, 6),
 (43, 'M', 45, 'Très bon', 'Sony Xperia M très bon état, fonctionne parfaitement \r\nUtilisé moins d\'un an ', NULL, '4,2', 'Oui', '16Go', 'Noir', 'Android', 0, 0, 1, 3, 6),
 (44, 'Z3 Compact', 80, 'Hors Service', 'Vends smartphone Sony Xperia Z3 compact. \r\nLe connecteur de charge est hs, il ne peut donc pas être chargé.', NULL, '4', 'Oui', '16Go', 'Blanc', 'Android', 0, 0, 1, 12, 6),
-(45, 'Tommy 3', 80, 'Neuf', 'Téléphone Smartphone 5,5 pouces Wiko Tommy 3 NEUF + Facture + Garantie jusqu\'au 10/10/2020 !', NULL, '5,5', 'Oui', '16Go', 'Noir', 'Android', 0, 0, 1, 1, 7),
 (46, 'Rainbow Lite 4G', 50, 'Très bon', 'Double Sim\r\n4G\r\nTient bien la charge\r\nDébloquer\r\nAndroid 5.1.1', NULL, '5,2', 'Oui', '16Go', 'Noir', 'Android', 0, 0, 1, 14, 7),
 (47, 'Wax 4G', 50, 'Bon', 'Fourni avec cable d\'alimentation chargeur, cable écouteur, housse en cuir un peu élimée plus coque du dos en parfait état avec sa batterie d\'origine\r\nCe modèle possède un bon appareil photo pour des prises de vues de bonnes qualité, très pratique pour accéder aux diverses applications\r\n', NULL, '4,8', 'Oui', '8Go', 'Noir', 'Android', 0, 0, 1, 2, 7),
 (48, 'Selfie Originial', 110, '', 'wiko selfi original neuf avec sa boîte et ses accessoires. ', NULL, '4,6', 'Non', '8Go', 'Noir', 'Android', 0, 0, 1, 12, 7),
@@ -201,7 +210,7 @@ INSERT INTO `telephone` (`idprod`, `libelle`, `prix`, `etat`, `description`, `ph
 (65, 'OnePlus 5', 250, 'Bon', 'Oneplus 5 64 go bon état. \r\nvendu avec une coque Spigen.', NULL, '5,8', 'Oui', '64Go', 'Noir', 'Android', 0, 0, 1, 11, 10),
 (66, 'Honor 7', 100, 'Bon', 'vend mon honor 7 en assez bonne état car j\'ai changer de telephone. Avec facture', NULL, '5', 'Oui', '32Go', 'Or', 'Android', 0, 0, 1, 14, 10),
 (67, 'Honor 8 lite', 95, 'Très bon', 'SMARTPHONE HONOR 8 Lite couleur blanc, avec une coque à rabat\r\nAcheté le 23.03.2018 (facture)\r\nLe tout en Excellent état , boite et accessoires d\'origine.', NULL, '5,2', 'Oui', '32Go', 'Blanc', 'Android', 0, 0, 1, 13, 10),
-(68, 'Gigaset GS100', 100, 'neuf', 'Téléphone neuf sous blister gagné lors d\'un challenge commercial\r\nGigaset GS100 bleu cobalt 8GB Dual sim (nano-sim, micro-sim) emplacement carte SD', NULL, '5', 'Oui', '8go', 'Bleu Cobalt', 'Android', 0, 0, 1, 3, 10),
+(68, 'Gigaset GS100', 100, 'neuf', 'Téléphone neuf sous blister gagné lors d\'un challenge commercial\r\nGigaset GS100 bleu cobalt 8GB Dual sim (nano-sim, micro-sim) emplacement carte SD', NULL, '5', 'Oui', '8go', 'Bleu Cobalt', 'Android', 1, 0, 1, 3, 10),
 (70, 'S8', 330, 'Très bon', 'Toujours protégé vendu avec boîte et accessoires, il est débloqué opérateur.', NULL, '5,1', 'Oui', '32Go', 'Noir', 'Android', 1, 0, 1, 2, 2);
 
 -- --------------------------------------------------------
@@ -251,7 +260,7 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`iduser`, `genre`, `nom`, `prenom`, `numero`, `mail`, `motdepasse`, `datenaissance`, `adresse1`, `credit`, `idville`) VALUES
-(1, 'Homme', 'Bernard', 'Philippe', 680763542, 'philippe.bernard@gmail.com', 'philippe', '1961-10-03', '35 rue des arbousiers', 195, 19),
+(1, 'Homme', 'Bernard', 'Philippe', 680763542, 'philippe.bernard@gmail.com', 'philippe', '1961-10-03', '35 rue des arbousiers', 388, 19),
 (2, 'Homme', 'Bernard', 'Jean', 784737493, 'jean.bernard@gmail.com', 'jean', '1978-12-24', '32 impasse des houx', 0, 272),
 (3, 'Homme', 'Dupont', 'Frédérick', 634223644, 'frederick.dupont@gmail.com', 'frederick', '1998-11-17', '12 avenue de la république', 0, 32),
 (8, 'Femme', 'Roux', 'Lucile', 605165489, 'lucile.roux@gmail.com', 'lucile', '1989-03-04', '255 rue de la mathe', 0, 75),
@@ -698,7 +707,7 @@ ALTER TABLE `offre`
 -- AUTO_INCREMENT pour la table `telephone`
 --
 ALTER TABLE `telephone`
-  MODIFY `idprod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `idprod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT pour la table `typetel`
