@@ -408,12 +408,12 @@ function updatecredits2($id)
     }
 }
 
-function updatecredits4($id)
+function updatecredits5($id)
 {
-    if (isset($_POST['ajouter4'])) {
+    if (isset($_POST['ajouter5'])) {
 
         extract(array_map("htmlspecialchars", $_POST));
-        $query = "UPDATE utilisateur SET credit = credit+4 WHERE iduser = :pid";
+        $query = "UPDATE utilisateur SET credit = credit+5 WHERE iduser = :pid";
         $bdd = getDatabase();
         $stmt = $bdd->prepare($query);
         $stmt->bindParam(':pid', $id);
@@ -436,12 +436,26 @@ function updatecredits10($id)
     }
 }
 
-function updatecredits20($id)
+function updatecredits25($id)
 {
-    if (isset($_POST['ajouter20'])) {
+    if (isset($_POST['ajouter25'])) {
 
         extract(array_map("htmlspecialchars", $_POST));
-        $query = "UPDATE utilisateur SET credit = credit+20 WHERE iduser = :pid";
+        $query = "UPDATE utilisateur SET credit = credit+25 WHERE iduser = :pid";
+        $bdd = getDatabase();
+        $stmt = $bdd->prepare($query);
+        $stmt->bindParam(':pid', $id);
+        $stmt->execute();
+        header('Location: ../helper/acheter.php');
+    }
+}
+
+function updatecredits50($id)
+{
+    if (isset($_POST['ajouter50'])) {
+
+        extract(array_map("htmlspecialchars", $_POST));
+        $query = "UPDATE utilisateur SET credit = credit+50 WHERE iduser = :pid";
         $bdd = getDatabase();
         $stmt = $bdd->prepare($query);
         $stmt->bindParam(':pid', $id);
