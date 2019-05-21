@@ -31,6 +31,7 @@ include '../helper/navbaradmin.php';
                 <h2 class="text-center card-header"><?=$adminlisteprofil[$i]->nom;?> <?=$adminlisteprofil[$i]->prenom;?></h2>
                 <div class="row">
                     <ul>
+                        <li>Id : <?=$adminlisteprofil[$i]->iduser;?></li>
                         <li>Genre : <?=$adminlisteprofil[$i]->genre;?></li>
                         <li>Téléphone : +33<?=$adminlisteprofil[$i]->numero;?></li>
                         <li>Mail : <?=$adminlisteprofil[$i]->mail;?></li>
@@ -38,10 +39,14 @@ include '../helper/navbaradmin.php';
                         <li>Date de naissance : <?=$adminlisteprofil[$i]->datenaissance;?></li>
                         <li>Adresse : <?=$adminlisteprofil[$i]->adresse1;?></li>
                         <li>Ville : <?=$adminlisteprofil[$i]->nomville;?></li>
+                        <?php if ($adminlisteprofil[$i]->iduser == "9999") {
+                            echo "test";
+                        } else { ?>
                         <form action="../admin/admindeleteprofil.php" method="post">
                             <input type="text" name="iduser" value="<?=$adminlisteprofil[$i]->iduser;?>" hidden>
                             <input type="submit" name="Supprimer" class="btn btn-danger" style="margin-top: 20px" value="Supprimer">
                         </form>
+                        <?php }?>
                     </ul>
                 </div>
             </div>
