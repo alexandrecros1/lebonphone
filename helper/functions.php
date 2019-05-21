@@ -109,7 +109,7 @@ function admininfosphone(){
         $bdd = getDataBase();
     }
     if ($bdd) {
-        $stmt = $bdd->prepare("SELECT * FROM telephone t, typetel ty, marque ma, utilisateur u WHERE t.idtype = ty.idtype AND t.idmarque = ma.idmarque AND t.iduser = u.iduser");
+        $stmt = $bdd->prepare("SELECT * FROM telephone t, typetel ty, marque ma, utilisateur u WHERE t.idtype = ty.idtype AND t.idmarque = ma.idmarque AND t.iduser = u.iduser ORDER BY idprod");
         if ($stmt->execute()) {
             $phone = $stmt->fetchAll(PDO::FETCH_OBJ);
             $stmt->closeCursor();
@@ -252,29 +252,30 @@ function postVar($name){
     return false;
 }
 
-function addTelephone($idprod, $libelle, $prix, $etat, $description, $photo, $tailleecran, $connectivite, $stockagememoire, $couleur, $systemexploit, $idtype,
+function addTelephone($idprod, $libelle, $prix, $etat, $description, $photo, $tailleecran, $connectivite, $stockagememoire, $couleur, $systemexploit, $dispo, $vendu, $idtype,
                       $iduser, $idmarque)
 {
     $db = getDatabase();
-    $sql='INSERT INTO telephone (libelle, prix, etat, description, photo, tailleecran, connectivite, stockagememoire, couleur, systemexploit, idtype, iduser, idmarque) 
-          VALUES(:libelle, :prix, :etat, :description, :photo, :tailleecran, :connectivite, :stockagememoire, :couleur, :systemexploit ,:idtype ,:iduser, :idmarque)';
+    $sql='INSERT INTO telephone (libelle, prix, etat, description, photo, tailleecran, connectivite, stockagememoire, couleur, systemexploit, dispo, vendu, idtype, iduser, idmarque) 
+          VALUES(:libelle, :prix, :etat, :description, :photo, :tailleecran, :connectivite, :stockagememoire, :couleur, :systemexploit, :dispo, :vendu, :idtype, :iduser, :idmarque)';
     $insert=$db->prepare($sql);
     $values = array('libelle' => $libelle, 'prix' => $prix, 'etat' => $etat, 'description' => $description, 'photo' => $photo, 'tailleecran' => $tailleecran,
-        'connectivite' => $connectivite, 'stockagememoire' => $stockagememoire, 'couleur' => $couleur, 'systemexploit' => $systemexploit, 'idtype' => $idtype,
+        'connectivite' => $connectivite, 'stockagememoire' => $stockagememoire, 'couleur' => $couleur, 'systemexploit' => $systemexploit, 'dispo' => $dispo, 'vendu' => $vendu, 'idtype' => $idtype,
         'iduser' => $iduser, 'idmarque' => $idmarque);
     $insert->execute($values);
+    header('Location: ../client/mesventes.php');
     return $db->lastInsertId();
 }
 
-function adminaddtelephone($idprod, $libelle, $prix, $etat, $description, $photo, $tailleecran, $connectivite, $stockagememoire, $couleur, $systemexploit, $idtype,
-                      $iduser, $idmarque)
+function adminaddtelephone($idprod, $libelle, $prix, $etat, $description, $photo, $tailleecran, $connectivite, $stockagememoire, $couleur, $systemexploit, $dispo, $vendu, $idtype,
+                           $iduser, $idmarque)
 {
     $db = getDatabase();
-    $sql='INSERT INTO telephone (libelle, prix, etat, description, photo, tailleecran, connectivite, stockagememoire, couleur, systemexploit, idtype, iduser, idmarque) 
-          VALUES(:libelle, :prix, :etat, :description, :photo, :tailleecran, :connectivite, :stockagememoire, :couleur, :systemexploit ,:idtype ,:iduser, :idmarque)';
+    $sql='INSERT INTO telephone (libelle, prix, etat, description, photo, tailleecran, connectivite, stockagememoire, couleur, systemexploit, dispo, vendu, idtype, iduser, idmarque) 
+          VALUES(:libelle, :prix, :etat, :description, :photo, :tailleecran, :connectivite, :stockagememoire, :couleur, :systemexploit, :dispo, :vendu, :idtype, :iduser, :idmarque)';
     $insert=$db->prepare($sql);
     $values = array('libelle' => $libelle, 'prix' => $prix, 'etat' => $etat, 'description' => $description, 'photo' => $photo, 'tailleecran' => $tailleecran,
-        'connectivite' => $connectivite, 'stockagememoire' => $stockagememoire, 'couleur' => $couleur, 'systemexploit' => $systemexploit, 'idtype' => $idtype,
+        'connectivite' => $connectivite, 'stockagememoire' => $stockagememoire, 'couleur' => $couleur, 'systemexploit' => $systemexploit, 'dispo' => $dispo, 'vendu' => $vendu, 'idtype' => $idtype,
         'iduser' => $iduser, 'idmarque' => $idmarque);
     $insert->execute($values);
     header('Location: ../admin/listetelephones.php');

@@ -253,6 +253,12 @@ include "../helper/navbaradmin.php";
                         </div>
                         <br><br>
 
+                        <!-- DISPO -->
+                        <input type="number" name="dispo" value="0" hidden>
+
+                        <!-- VENDU -->
+                        <input type="number" name="vendu" value="0" hidden>
+
                         <!-- Form actions -->
                         <div class="form-group">
                             <div class="col-md-12 text-right">
