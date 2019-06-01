@@ -48,14 +48,12 @@ function infosPhone($id){
 }
 
 function infosacheteur($id){
-    $bdd = null;
 
-    if ($bdd == null) {
-        $bdd = getDataBase();
-    }
+    $bdd = getDataBase();
     if ($bdd) {
-        $stmt = $bdd->prepare("SELECT * FROM utilisateur u, achete a, marque m, typetel ty, telephone t 
-WHERE u.iduser = a.iduser AND ty.idtype = t.idtype AND m.idmarque = t.idmarque AND t.idprod = a.idprod AND u.iduser = :pid");
+        $stmt = $bdd->prepare("SELECT u2.nom, u2.prenom, u2.mail, u2.numero, m.nommarque, t.prix, t.libelle, t.vendu, t.idprod 
+FROM utilisateur u1, achete a, telephone t, marque m, utilisateur u2 
+WHERE u1.iduser = a.iduser AND a.idprod = t.idprod AND t.iduser = u2.iduser AND t.idmarque = m.idmarque AND u1.iduser = :pid");
         $stmt->bindParam(':pid', $id);
         if ($stmt->execute()) {
             $phone = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -66,13 +64,8 @@ WHERE u.iduser = a.iduser AND ty.idtype = t.idtype AND m.idmarque = t.idmarque A
 }
 
 function infosacheteurventes($idprod){
-    $bdd = null;
 
-    if ($bdd == null) {
-        $bdd = getDataBase();
-        $bdd = getDataBase();
-    }
-
+    $bdd = getDataBase();
     $user = null;
     if ($bdd) {
         $stmt = $bdd->prepare("SELECT * FROM utilisateur u, achete a 
@@ -85,13 +78,9 @@ WHERE u.iduser = a.iduser AND a.idprod = :pid");
     }
     return $user;
 }
-function admininfosuser()
-{
-    $bdd = null;
+function admininfosuser(){
 
-    if ($bdd == null) {
-        $bdd = getDataBase();
-    }
+    $bdd = getDataBase();
     if ($bdd) {
         $stmt = $bdd->prepare("SELECT * FROM utilisateur U, ville V WHERE U.idville = V.idville");
         if ($stmt->execute()) {
@@ -183,7 +172,7 @@ function countprod($id){
 function countachat($id){
 
     $bdd = getDataBase();
-    $stmt = $bdd->prepare("SELECT COUNT(*) as count FROM utilisateur U, achete A WHERE U.iduser = A.iduser AND A.iduser = :pid");
+    $stmt = $bdd->prepare("SELECT COUNT(*) as count FROM utilisateur U, achete A, telephone T WHERE U.iduser = A.iduser AND T.idprod = A.idprod AND U.iduser = :pid");
     $stmt->bindParam(':pid', $id);
     $stmt->execute();
     $count = $stmt->fetchAll(PDO::FETCH_OBJ);
